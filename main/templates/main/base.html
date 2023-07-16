@@ -1,5 +1,6 @@
-{% load static %}
 <!doctype html>
+{% load static %}
+{% load my_tags %}
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -26,30 +27,11 @@
       gtag('js', new Date());
 
       gtag('config', 'G-DD68JWLK0E');
-
-
-
-
-
-
-
-
-
-
 </script>
 
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(85414015, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true });
-
-
-
-
-
-
-
-
-
 </script>
 <noscript>
     <div><img src="https://mc.yandex.ru/watch/85414015" style="position:absolute; left:-9999px;" alt=""/></div>
@@ -67,10 +49,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-md-7 py-4">
-
                 </div>
                 {% include 'main/includes/inc_main_menu.html' %}
-
             </div>
         </div>
     </div>
@@ -82,7 +62,7 @@
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                     <circle cx="12" cy="13" r="4"></circle>
                 </svg>
-                <strong>Album</strong>
+                <strong>Альбом</strong>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
                     aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,7 +76,9 @@
 
     <section class="jumbotron text-center">
         <div class="container">
-            <h1 class="jumbotron-heading">{{ title }}</h1>
+            <h1>{{ title }}</h1>
+            {% current_time "%H:%M %d-%m-%Y " as the_time %}
+            <p>Время {{ the_time }}.</p>
 
         </div>
     </section>
@@ -116,7 +98,7 @@
 <footer class="text-muted">
     <div class="container">
         <p class="float-right">
-            <a href="#">Back to top</a>
+            <a href="#">На верх страницы</a>
         </p>
         <p>&copy; 2023 - {% now 'Y' %}</p>
     </div>
@@ -129,15 +111,6 @@
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')
-
-
-
-
-
-
-
-
-
 </script>
 <script src="{% static 'js/vendor/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
