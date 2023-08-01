@@ -25,6 +25,14 @@
                             <td>Почта</td>
                             <td>{{ object.email }}</td>
                         </tr>
+                        <tr>
+                            <td>Предмет</td>
+                            <td>{{ subject.title }}</td>
+                        </tr>
+                        <tr>
+                            <td>Описание</td>
+                            <td>{{ subject.description }}</td>
+                        </tr>
                     </table>
 
                 </div>
@@ -32,7 +40,7 @@
             </div>
         </div>
         <div class="col-6">
-            <img src="/media/{{ object.avatar }}"/>
+            <img src="/media/{{ object.avatar }}" style="height: 300px"/></img>
         </div>
     </div>
 </div>

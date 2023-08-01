@@ -78,7 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'project5',  # Название БД
-        'USER': 'postgres',  # Пользователь для подключения
+        'USER': 'mikhapol',  # Пользователь для подключения
         'PASSWORD': os.getenv('POSTGRES_PASSWORD')  # Пароль для этого пользователя
         # 'HOST': '127.0.0.1',                          # Адрес, на котором развернут сервер БД
         # 'PORT': 5432,                                 # Порт, на котором работает сервер БД
