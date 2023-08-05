@@ -1,9 +1,9 @@
 from django.db import models
 
 
-class Meterial(models.Model):
+class Material(models.Model):
     title = models.CharField(max_length=150, verbose_name='Название')
-    body =models.TextField(verbose_name='содержимое')
+    body = models.TextField(verbose_name='содержимое')
 
     views_count = models.IntegerField(default=0, verbose_name='просмотры')
     is_published = models.BooleanField(default=True, verbose_name='опубликовано')

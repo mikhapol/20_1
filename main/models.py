@@ -12,7 +12,7 @@ class Student(models.Model):
     # avatar = models.ImageField(upload_to='students/', verbose_name='Аватар', null=True, blank=True) или
     avatar = models.ImageField(upload_to='students/', verbose_name='Аватар', **NULLABLE)
 
-    email = models.CharField(max_length=150, verbose_name='email', unique=True, **NULLABLE)
+    email = models.CharField(max_length=150, verbose_name='email', unique=True)
 
     is_active = models.BooleanField(default=True, verbose_name='Учится')
 
@@ -23,6 +23,7 @@ class Student(models.Model):
         verbose_name = 'Студент'
         verbose_name_plural = 'Студенты'
         ordering = ('last_name',)
+
 
 class Subject(models.Model):
     title = models.CharField(max_length=150, verbose_name='название')
@@ -36,4 +37,3 @@ class Subject(models.Model):
     class Meta:
         verbose_name = 'предмет'
         verbose_name_plural = 'предметы'
-

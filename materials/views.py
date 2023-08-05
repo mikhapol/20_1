@@ -2,13 +2,13 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from pytils.translit import slugify
 
-from meterials.models import Meterial
+from materials.models import Material
 
 
-class MeterialCreateView(CreateView):
-    model = Meterial
+class MaterialCreateView(CreateView):
+    model = Material
     fields = ('title', 'body',)
-    success_url = reverse_lazy('meterials:list')
+    success_url = reverse_lazy('materials:list')
 
     def form_valid(self, form):
         if form.is_valid():
@@ -18,10 +18,10 @@ class MeterialCreateView(CreateView):
         return super().form_valid(form)
 
 
-class MeterialUpdateView(UpdateView):
-    model = Meterial
+class MaterialUpdateView(UpdateView):
+    model = Material
     fields = ('title', 'body',)
-    # success_url = reverse_lazy('meterials:list')
+    # success_url = reverse_lazy('materials:list')
 
     def form_valid(self, form):
         if form.is_valid():
@@ -31,11 +31,11 @@ class MeterialUpdateView(UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('meterials:view', args=[self.kwargs.get('pk')])
+        return reverse('materials:view', args=[self.kwargs.get('pk')])
 
 
-class MeterialListView(ListView):
-    model = Meterial
+class MaterialListView(ListView):
+    model = Material
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
@@ -43,8 +43,8 @@ class MeterialListView(ListView):
         return queryset
 
 
-class MeterialDetailView(DetailView):
-    model = Meterial
+class MaterialDetailView(DetailView):
+    model = Material
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
@@ -53,6 +53,6 @@ class MeterialDetailView(DetailView):
         return self.object
 
 
-class MeterialDeleteView(DeleteView):
-    model = Meterial
-    success_url = reverse_lazy('meterials:list')
+class MaterialDeleteView(DeleteView):
+    model = Material
+    success_url = reverse_lazy('materials:list')

@@ -10,7 +10,7 @@
                         {% csrf_token %}
                         <p>Хотите удалить материал "{{ object.title }}"?</p>
                         <button type="submit" class="btn btn-danger">Да</button>
-                        <a href="{% url 'meterials:list' %}" class="btn btn-warning">Нет</a>
+                        <a href="{% url 'materials:list' %}" class="btn btn-warning">Нет</a>
                     </form>
                 </div>
             </div>

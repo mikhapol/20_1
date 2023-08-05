@@ -25,6 +25,7 @@
                             <td>Почта</td>
                             <td>{{ object.email }}</td>
                         </tr>
+                        {% for subject in object.subject_set.all %}
                         <tr>
                             <td>Предмет</td>
                             <td>{{ subject.title }}</td>
@@ -33,6 +34,7 @@
                             <td>Описание</td>
                             <td>{{ subject.description }}</td>
                         </tr>
+                        {% endfor %}
                     </table>
 
                 </div>
