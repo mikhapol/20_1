@@ -12,15 +12,19 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+dot_env = os.path.join(BASE_DIR / '.env',)
+load_dotenv(dotenv_path=dot_env)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5ivw^yc4=hyjrhq9ko(lj)nbuec&d$zrq5mdqwmt#ifil6)i8#'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -79,8 +83,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'project5',  # Название БД
-        'USER': 'mikhapol',  # Пользователь для подключения
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD')  # Пароль для этого пользователя
+        'USER': os.getenv('POSTGRES_USER'),  # Пользователь для подключения
+        # 'PASSWORD': os.getenv('POSTGRES_PASSWORD')  # Пароль для этого пользователя
         # 'HOST': '127.0.0.1',                          # Адрес, на котором развернут сервер БД
         # 'PORT': 5432,                                 # Порт, на котором работает сервер БД
     }
@@ -134,3 +138,15 @@ MEDIA_ROOT = BASE_DIR / 'media'
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'users:login'
+
+CACHE_ENABLED = os.getenv('CACHE_ENABLED') == 'True'
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": "redis://127.0.0.1:6379",
+            "TIMEOUT": 60
+        }
+    }

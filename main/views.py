@@ -1,3 +1,7 @@
+from config import settings
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from django.core.cache import cache
 from django.forms import inlineformset_factory
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
@@ -5,6 +9,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 from main.forms import StudentForm, SubjectForm
 from main.models import Student, Subject
+from main.services import cached_subjects_for_student
 
 
 class StudentListView(ListView):
@@ -19,7 +24,7 @@ class StudentListView(ListView):
 #     }
 #     return render(request, 'main/student_list.html', context)
 
-
+@login_required
 def contact(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -34,8 +39,24 @@ def contact(request):
     return render(request, 'main/contact.html', context)
 
 
-class StudentDetailView(DetailView):
+class StudentDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Student
+    permission_required = 'main.detail_student'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        # if settings.CACHE_ENABLED:
+        #     key = f'subject_list_{self.object.pk}'
+        #     subject_list = cache.get(key)
+        #     if subject_list is None:
+        #         subject_list = self.object.subject_set.all()
+        #         cache.set(key, subject_list)
+        # else:
+        #     subject_list = self.object.subject_set.all()
+        #
+        # context_data['subjects'] = subject_list
+        context_data['subjects'] = cached_subjects_for_student(self.object.pk)
+        return context_data
 
 
 # def view_student(request, pk):
@@ -46,10 +67,11 @@ class StudentDetailView(DetailView):
 #
 #     return render(request, 'main/student_detail.html', context)
 
-class StudentCreateView(CreateView):
+class StudentCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Student
     # fields = ('first_name', 'last_name', 'avatar')
     form_class = StudentForm
+    permission_required = 'main.add_student'
     success_url = reverse_lazy('main:index')
 
     def get_context_data(self, **kwargs):
@@ -75,9 +97,10 @@ class StudentCreateView(CreateView):
     }
 
 
-class StudentUpdateView(UpdateView):
+class StudentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Student
     form_class = StudentForm
+    permission_required = 'main.change_student'
     # fields = ('first_name', 'last_name', 'avatar')
     success_url = reverse_lazy('main:index')
 
@@ -104,11 +127,16 @@ class StudentUpdateView(UpdateView):
     }
 
 
-class StudentDeleteView(DeleteView):
+class StudentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Student
     success_url = reverse_lazy('main:index')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
+
+@login_required
+@permission_required('main.activity_student')
 def toggle_activity(request, pk):
     student_item = get_object_or_404(Student, pk=pk)
     if student_item.is_active:

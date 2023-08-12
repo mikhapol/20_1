@@ -1,9 +1,9 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+<img src="/media/{{ object.avatar }}" style="height: 300px; width: 300px; "/></img>
 <div class="col-12">
     <div class="row">
-
         <div class="col-6">
             <div class="card">
                 <div class="card-header">
@@ -25,7 +25,21 @@
                             <td>Почта</td>
                             <td>{{ object.email }}</td>
                         </tr>
-                        {% for subject in object.subject_set.all %}
+                    </table>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        Предметы студента
+                    </h3>
+                </div>
+                <div class="card-body">
+                    {% for subject in subjects %}
+                    <table class="table">
                         <tr>
                             <td>Предмет</td>
                             <td>{{ subject.title }}</td>
@@ -34,15 +48,16 @@
                             <td>Описание</td>
                             <td>{{ subject.description }}</td>
                         </tr>
-                        {% endfor %}
                     </table>
-
+                    <ul>
+                        <li>
+                            {{ subject }}
+                        </li>
+                    </ul>
+                    {% endfor %}
                 </div>
                 <div class="card-footer"></div>
             </div>
-        </div>
-        <div class="col-6">
-            <img src="/media/{{ object.avatar }}" style="height: 300px"/></img>
         </div>
     </div>
 </div>
